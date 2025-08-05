@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.uisil.proyecto_museo_dragones.controllers.LoginController">
+
+    <!-- Todo el contenido centrado -->
+    <VBox spacing="20" alignment="CENTER">
+        <!-- Logo -->
+        <Label text="Logo del museo"
+               style="-fx-background-color: #ddd; -fx-padding: 50px; -fx-font-size: 20px; -fx-alignment: center;"/>
+
+        <!-- Campo usuario -->
+        <VBox spacing="5" maxWidth="300">
+            <Label text="Nombre o e-mail:"/>
+            <TextField fx:id="txtUsuario" promptText="Ingrese su e-mail o nombre"/>
+        </VBox>
+
+        <!-- Campo contraseña -->
+        <VBox spacing="5" maxWidth="300">
+            <Label text="Contraseña:"/>
+            <PasswordField fx:id="txtContrasena" promptText="Ingrese su contraseña"/>
+        </VBox>
+
+        <!-- Botón login -->
+        <Button text="Iniciar Sesión" onAction="#IniciarSesion" maxWidth="150"/>
+
+        <!-- Links -->
+        <VBox spacing="5" alignment="CENTER">
+            <Hyperlink text="¿Olvidó su contraseña?"/>
+            <Hyperlink text="¿No tienes cuenta? Crear usuario"/>
+        </VBox>
+    </VBox>
+
+</StackPane>
