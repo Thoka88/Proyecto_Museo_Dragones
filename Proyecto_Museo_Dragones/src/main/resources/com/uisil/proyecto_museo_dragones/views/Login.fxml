@@ -29,8 +29,8 @@
 
         <!-- Links -->
         <VBox spacing="5" alignment="CENTER">
-            <Hyperlink text="¿Olvidó su contraseña?"/>
-            <Hyperlink text="¿No tienes cuenta? Crear usuario"/>
+            <Hyperlink fx:id="linkContrasena" onAction="#RecuperarContrasena"  text="¿Olvidó su contraseña?"/>
+            <Hyperlink fx:id="linkRegistro" onAction="#RegistrarCuenta"  text="¿No tienes cuenta? Crear usuario"/>
         </VBox>
     </VBox>
 

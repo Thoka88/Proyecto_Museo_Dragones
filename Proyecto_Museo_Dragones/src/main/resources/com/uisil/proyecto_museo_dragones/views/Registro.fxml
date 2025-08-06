@@ -18,7 +18,9 @@
             <ColumnConstraints minWidth="200"/>
         </columnConstraints>
 
-        <RowConstraints minHeight="30"/>
+        <rowConstraints>
+            <RowConstraints minHeight="30"/>
+        </rowConstraints>
 
         <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
         <TextField fx:id="txtNombre" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
@@ -31,7 +33,7 @@
 
         <Label text="Género:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
         <HBox spacing="10" GridPane.rowIndex="3" GridPane.columnIndex="1">
-            <ToggleGroup fx:id="generoGroup"/>
+            
             <RadioButton text="Masculino" toggleGroup="$generoGroup" fx:id="rbMasculino"/>
             <RadioButton text="Femenino" toggleGroup="$generoGroup" fx:id="rbFemenino"/>
         </HBox>
