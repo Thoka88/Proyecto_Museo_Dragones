@@ -3,6 +3,7 @@ module com.uisil.proyecto_museo_dragones {
     requires javafx.fxml;
     requires javafx.graphics;
     requires java.base;
+    requires java.sql;
 
     exports com.uisil.proyecto_museo_dragones;
     exports com.uisil.proyecto_museo_dragones.controllers;
