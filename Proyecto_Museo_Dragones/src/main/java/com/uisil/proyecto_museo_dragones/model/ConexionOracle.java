@@ -10,8 +10,8 @@ import java.sql.SQLException;
 
 public class ConexionOracle {
     private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe"; // Cambia por tu host/puerto/SID
-    private static final String USER = "SYSTEM"; // o el usuario que creaste
-    private static final String PASS = "tu_contraseña";
+    private static final String USER = "Thoka"; // o el usuario que creaste
+    private static final String PASS = "uisil";
 
     public static Connection getConexion() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASS);
