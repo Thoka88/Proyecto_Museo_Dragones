@@ -4,6 +4,7 @@ module com.uisil.proyecto_museo_dragones {
     requires javafx.graphics;
     requires java.base;
     requires java.sql;
+     requires jakarta.mail;
 
     exports com.uisil.proyecto_museo_dragones;
     exports com.uisil.proyecto_museo_dragones.controllers;

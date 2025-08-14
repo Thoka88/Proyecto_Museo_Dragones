@@ -2,18 +2,18 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+
 
 <VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" spacing="10" alignment="CENTER" 
       fx:controller="com.uisil.proyecto_museo_dragones.controllers.RecuperarContrasenaController" style="-fx-padding: 20;">
+    
     <Label text="Recuperar contraseña" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
     
     <Label text="Correo electrónico:"/>
     <TextField fx:id="correoField" promptText="Ingrese su correo electrónico" maxWidth="250"/>
     
-    <Button fx:id="recuperarBtn" text="Recuperar Contraseña" 
+    <Button fx:id="recuperarBtn" text="Resetear Contraseña" 
             style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
     
-    <Label fx:id="nuevaContrasenaLabel" text="Tu nueva contraseña es:" visible="false"/>
-    <Label fx:id="contrasenaGenerada" style="-fx-font-size: 16px; -fx-font-weight: bold;" visible="false"/>
+    <Label fx:id="mensajeLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;" visible="true"/>
 </VBox>
