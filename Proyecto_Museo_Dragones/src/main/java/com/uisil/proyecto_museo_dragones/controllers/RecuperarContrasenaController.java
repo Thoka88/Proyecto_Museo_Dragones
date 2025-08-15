@@ -60,12 +60,12 @@ public class RecuperarContrasenaController {
                 Stage stageActual = (Stage) mensajeLabel.getScene().getWindow();
                 stageActual.close();
 
-                // Abrir la ventana de login
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ruta/a/Login.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uisil/proyecto_museo_dragones/views/Login.fxml"));
                 Parent root = loader.load();
                 Stage stageLogin = new Stage();
-                stageLogin.setScene(new Scene(root));
-                stageLogin.setTitle("Login");
+                stageLogin.setScene(new Scene(root, 720, 680)); // mismo tamaño que Login
+                stageLogin.setResizable(false);
+                stageLogin.setTitle("Login Museo");
                 stageLogin.show();
 
             } catch (Exception ex) {

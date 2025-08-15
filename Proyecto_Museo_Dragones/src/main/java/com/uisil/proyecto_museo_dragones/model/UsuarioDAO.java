@@ -12,44 +12,41 @@ import java.sql.CallableStatement;
 
 public class UsuarioDAO {
 
-    public void registrarUsuario(String nombre, String correo, String contrasena, String rol) {
-        String sql = "INSERT INTO USUARIOS (nombre, correo, contrasena, rol) VALUES (?, ?, ?, ?)";
+    public Usuario loginYObtenerUsuario(String usuarioOCorreo, String contrasena) {
+        String sql = "SELECT ID_USUARIO, NOMBRE, APELLIDOS, CORREO, ROL, EDAD, FECHA_CREACION, GENERO, CONTRASENA " +
+                     "FROM USUARIOS WHERE CORREO = ? OR NOMBRE = ?";
+
         try (Connection con = ConexionOracle.getConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps.setString(1, nombre);
-            ps.setString(2, correo);
-            ps.setString(3, HashUtil.sha256(contrasena)); // Hash en código
-            ps.setString(4, rol);
-            ps.executeUpdate();
+            ps.setString(1, usuarioOCorreo);
+            ps.setString(2, usuarioOCorreo);
 
-            System.out.println("Usuario registrado correctamente.");
-        } catch (SQLException e) {
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String hashGuardado = rs.getString("CONTRASENA");
+                String hashIngresado = HashUtil.sha256(contrasena);
+
+                if (hashGuardado.equals(hashIngresado)) {
+                    return new Usuario(
+                        rs.getInt("ID_USUARIO"),
+                        rs.getString("NOMBRE"),
+                        rs.getString("APELLIDOS"),
+                        rs.getString("CORREO"),
+                        rs.getString("ROL"),
+                        rs.getInt("EDAD"),
+                        rs.getDate("FECHA_CREACION").toLocalDate(),
+                        rs.getString("GENERO")
+                    );
+                }
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        return null; // Si usuario no existe o contraseña incorrecta
     }
-
-    public boolean login(String usuarioOCorreo, String contrasena) {
-    String sql = "SELECT contrasena FROM USUARIOS WHERE correo = ? OR nombre = ?";
-    try (Connection con = ConexionOracle.getConexion();
-         PreparedStatement ps = con.prepareStatement(sql)) {
-
-        // Pone el mismo valor en los dos parámetros: correo o nombre
-        ps.setString(1, usuarioOCorreo);
-        ps.setString(2, usuarioOCorreo);
-
-        ResultSet rs = ps.executeQuery();
-
-        if (rs.next()) {
-            String hashGuardado = rs.getString("contrasena");
-            String hashIngresado = HashUtil.sha256(contrasena);
-            return hashGuardado.equals(hashIngresado);
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-    return false;
-}}
+}
 
     
 

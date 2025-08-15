@@ -39,7 +39,7 @@
         </HBox>
 
         <Label text="E-mail:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-        <TextField fx:id="txtEmail" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+        <TextField fx:id="txtCorreo" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
         <Label text="Contraseña:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
         <PasswordField fx:id="txtContrasena" GridPane.rowIndex="5" GridPane.columnIndex="1"/>

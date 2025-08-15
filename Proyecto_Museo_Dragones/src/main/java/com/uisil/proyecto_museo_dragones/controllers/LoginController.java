@@ -1,6 +1,7 @@
 package com.uisil.proyecto_museo_dragones.controllers;
 
 import com.uisil.proyecto_museo_dragones.App;
+import com.uisil.proyecto_museo_dragones.model.Usuario;
 import com.uisil.proyecto_museo_dragones.model.UsuarioDAO;
 import java.io.IOException;
 import javafx.event.ActionEvent;
@@ -9,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -29,48 +31,65 @@ public class LoginController {
     private Hyperlink linkRegistro;
 
     @FXML
-private void IniciarSesion() {
-    String usuario = txtUsuario.getText();     // Este sería el correo
+    private void IniciarSesion() {
+    String usuario = txtUsuario.getText();
     String contrasena = txtContrasena.getText();
 
     UsuarioDAO usuarioDAO = new UsuarioDAO();
-    boolean loginExitoso = usuarioDAO.login(usuario, contrasena);
+    Usuario usuarioLogueado = usuarioDAO.loginYObtenerUsuario(usuario, contrasena);
 
-    if (loginExitoso) {
-        System.out.println("Login correcto. Abriendo ventana principal...");
+    if (usuarioLogueado != null) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uisil/proyecto_museo_dragones/views/Main_Sala.fxml"));
+            Stage stageLogin = (Stage) txtUsuario.getScene().getWindow();
+            stageLogin.close();
+
+            String vista;
+            if (usuarioLogueado.getRol().equalsIgnoreCase("ADMIN")) {
+                vista = "/com/uisil/proyecto_museo_dragones/views/Vista_Admin.fxml";
+            } else {
+                vista = "/com/uisil/proyecto_museo_dragones/views/Visitantes_Salas.fxml";
+            }
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(vista));
             Parent root = loader.load();
-            Stage stage = (Stage) txtUsuario.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
+
+            Stage stageMain = new Stage();
+            stageMain.setTitle("Museo de Dragones");
+            stageMain.setScene(new Scene(root, 1024, 768));
+            stageMain.setResizable(false);
+            stageMain.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     } else {
-        System.out.println("Usuario o contraseña incorrectos.");
-        // Aquí podrías mostrar un Alert de JavaFX
-        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error de inicio de sesión");
         alert.setHeaderText(null);
         alert.setContentText("Correo o contraseña incorrectos");
         alert.showAndWait();
     }
 }
+
+
     @FXML
     private void RecuperarContrasena(ActionEvent event) {
-    System.out.println("Redirigiendo a la vista de login...");
-    // Aquí puedes cargar otra escena, por ejemplo:
+    System.out.println("Redirigiendo a la vista de recuperar contraseña...");
     try {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uisil/proyecto_museo_dragones/views/RecuperarContrasena.fxml"));
         Parent root = loader.load();
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 720, 680); // mismo tamaño que login
+        stage.setScene(scene);
+        stage.setResizable(false); // opcional
+        stage.setTitle("Recuperar Contraseña");
         stage.show();
     } catch (IOException e) {
         e.printStackTrace();
     }
 }
+
      @FXML
     private void RegistrarCuenta(ActionEvent event) {
     System.out.println("Redirigiendo a la vista de login...");

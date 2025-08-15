@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.uisil.proyecto_museo_dragones.controllers.Visitantes_SalasController">
+
+    <!-- Top: Logo y Secciones -->
+    <top>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <HBox spacing="20" alignment="CENTER_LEFT">
+                <ImageView fx:id="logoImage" fitWidth="80" fitHeight="80" preserveRatio="true"/>
+                <Button fx:id="btnSeccion1" text="Sección 1"/>
+                <Button fx:id="btnSeccion2" text="Sección 2"/>
+                <Button fx:id="btnSeccion3" text="Sección 3"/>
+            </HBox>
+
+            <!-- Barra de búsqueda -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- Center: Galería -->
+    <center>
+        <VBox spacing="10" alignment="CENTER">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <Label fx:id="lblNombreSala" text="Nombre de la Sala" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+            
+            <HBox spacing="15" alignment="CENTER">
+                
+                
+                <!-- Contenedor de objetos -->
+                <HBox spacing="15">
+                    <VBox alignment="CENTER">
+                        <Pane prefWidth="100" prefHeight="120" style="-fx-background-color: lightgray;"/>
+                        <Label text="Título Objeto" />
+                        <Label text="Descripción"/>
+                    </VBox>
+                    <VBox alignment="CENTER">
+                        <Pane prefWidth="100" prefHeight="120" style="-fx-background-color: lightgray;"/>
+                        <Label text="Título Objeto" />
+                        <Label text="Descripción"/>
+                    </VBox>
+                    <VBox alignment="CENTER">
+                        <Pane prefWidth="100" prefHeight="120" style="-fx-background-color: lightgray;"/>
+                        <Label text="Título Objeto" />
+                        <Label text="Descripción"/>
+                    </VBox>
+                    <VBox alignment="CENTER">
+                        <Pane prefWidth="100" prefHeight="120" style="-fx-background-color: lightgray;"/>
+                        <Label text="Título Objeto" />
+                        <Label text="Descripción"/>
+                    </VBox>
+                </HBox>
+
+                
+            </HBox>
+        </VBox>
+    </center>
+
+    <!-- Bottom: Footer -->
+    <bottom>
+        <Label text="© 2025 EcoFósil – Museo de Historia Natural. Todos los derechos reservados." 
+               style="-fx-font-size: 10px; -fx-text-alignment: center;" 
+               maxWidth="Infinity">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+        </Label>
+    </bottom>
+</BorderPane>
+
+
