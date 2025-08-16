@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.uisil.proyecto_museo_dragones.controllers.RegistroController"
       alignment="CENTER"
-      spacing="10"
-      style="-fx-padding: 20;">
+      spacing="20"
+      style="-fx-padding: 30; -fx-background-color: #f9f9f9;">
 
-    <Label text="¡Únete a EcoFósil!" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+    <Label text="¡Únete a EcoFósil!" 
+           style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
 
-    <GridPane hgap="10" vgap="10">
+    <GridPane hgap="10" vgap="10" alignment="CENTER">
+        <maxWidth>
+            <Region fx:constant="USE_PREF_SIZE"/>
+        </maxWidth>
+
         <columnConstraints>
-            <ColumnConstraints minWidth="100"/>
-            <ColumnConstraints minWidth="200"/>
+            <ColumnConstraints minWidth="100" halignment="RIGHT"/>
+            <ColumnConstraints minWidth="200" halignment="LEFT"/>
         </columnConstraints>
-
-        <rowConstraints>
-            <RowConstraints minHeight="30"/>
-        </rowConstraints>
 
         <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
         <TextField fx:id="txtNombre" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
@@ -32,8 +33,7 @@
         <TextField fx:id="txtEdad" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
         <Label text="Género:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-        <HBox spacing="10" GridPane.rowIndex="3" GridPane.columnIndex="1">
-            
+        <HBox spacing="10" GridPane.rowIndex="3" GridPane.columnIndex="1" alignment="CENTER_LEFT">
             <RadioButton text="Masculino" toggleGroup="$generoGroup" fx:id="rbMasculino"/>
             <RadioButton text="Femenino" toggleGroup="$generoGroup" fx:id="rbFemenino"/>
         </HBox>
@@ -43,9 +43,10 @@
 
         <Label text="Contraseña:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
         <PasswordField fx:id="txtContrasena" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-
     </GridPane>
 
-    <Button text="Registrarse" onAction="#onRegistrar"/>
+    <Button text="Registrarse" onAction="#onRegistrar" 
+            style="-fx-padding: 8 20; -fx-font-size: 14px;"/>
 
 </VBox>
+

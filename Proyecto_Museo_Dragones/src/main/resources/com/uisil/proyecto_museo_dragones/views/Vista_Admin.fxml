@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
@@ -14,13 +13,7 @@
                 <Insets top="10" left="10" right="10" bottom="10"/>
             </padding>
             <Button text="Logo" prefWidth="130"/>
-            <Button fx:id="btnUsuarios" text="Usuarios" prefWidth="130"/>
-            <Button fx:id="btnSala1" text="Sala 1" prefWidth="130"/>
-            <Button fx:id="btnSala2" text="Sala 2" prefWidth="130"/>
-            <Button fx:id="btnSala3" text="Sala 3" prefWidth="130"/>
-            <Button fx:id="btnAgregarSala" text="+ Sala" prefWidth="130"/>
-            <Button fx:id="btnAgregarAdmin" text="Agregar Admin" prefWidth="130"/>
-            <Button fx:id="btnSalir" text="Salir" prefWidth="130" style="-fx-background-color: #ff4d4d; -fx-text-fill: white;"/>
+            <Button fx:id="btnSalir" onAction="#salirProgramaConConfirmacion" text="Salir" prefWidth="130" style="-fx-background-color: #ff4d4d; -fx-text-fill: white;"/>
         </VBox>
     </left>
 
@@ -28,29 +21,36 @@
     <center>
         <VBox spacing="15" alignment="CENTER">
             <Label fx:id="lblTitulo" text="Panel de Administración" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
-            
-            <!-- Tabla -->
-            <TableView fx:id="tablaDatos" prefWidth="500" prefHeight="300">
-                <columns>
-                     <TableColumn fx:id="col1" text="ID" />
-        <TableColumn fx:id="col2" text="Nombre" />
-        <TableColumn fx:id="col3" text="Apellido" />
-        <TableColumn fx:id="col4" text="Correo" />
-        <TableColumn fx:id="col5" text="Rol" />
-        <TableColumn fx:id="col6" text="Edad" />
-        <TableColumn fx:id="col7" text="Fecha Creación" />
-        <TableColumn fx:id="col8" text="Género" />
-                    <TableColumn text="Acciones"/>
-                </columns>
-            </TableView>
 
-            <!-- Botones -->
+            <!-- Botones para seleccionar rol -->
             <HBox spacing="10" alignment="CENTER">
-                <Button fx:id="btnAgregar" text="Agregar"/>
-                <Button fx:id="btnEditar" text="Editar"/>
-                <Button fx:id="btnEliminar" text="Eliminar"/>
+                <Button fx:id="btnMostrarVisitantes" onAction="#mostrarVisitantes" text="Visitantes"/>
+                <Button fx:id="btnMostrarAdmins" onAction="#mostrarAdmins" text="Administradores"/>
             </HBox>
+
+            <!-- Panel que contiene tabla y botones -->
+            <VBox fx:id="panelUsuarios" spacing="10">
+                <TableView fx:id="tablaDatos" prefWidth="500" prefHeight="300">
+                    <columns>
+                        <TableColumn fx:id="col1" text="ID" />
+                        <TableColumn fx:id="col2" text="Nombre" />
+                        <TableColumn fx:id="col3" text="Apellido" />
+                        <TableColumn fx:id="col4" text="Correo" />
+                        <TableColumn fx:id="col5" text="Rol" />
+                        <TableColumn fx:id="col6" text="Edad" />
+                        <TableColumn fx:id="col7" text="Fecha Creación" />
+                        <TableColumn fx:id="col8" text="Género" />
+                    </columns>
+                </TableView>
+
+                <HBox spacing="10" alignment="CENTER">
+                    <Button fx:id="btnAgregar" text="Agregar"/>
+                    <Button fx:id="btnEditar" text="Editar"/>
+                    <Button fx:id="btnEliminar" text="Eliminar"/>
+                </HBox>
+            </VBox>
         </VBox>
     </center>
-
 </BorderPane>
+
+

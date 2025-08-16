@@ -97,11 +97,14 @@ public class LoginController {
     try {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/uisil/proyecto_museo_dragones/views/Registro.fxml"));
         Parent root = loader.load();
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 720, 680); // mismo tamaño que login
+        stage.setScene(scene);
+        stage.setResizable(false); // opcional
+        stage.setTitle("Recuperar Contraseña");
         stage.show();
     } catch (IOException e) {
         e.printStackTrace();
     }
-}
-}    
+}}    
