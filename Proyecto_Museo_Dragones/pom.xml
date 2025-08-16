@@ -25,13 +25,6 @@
   <artifactId>ojdbc11</artifactId>
   <version>19.8.0.0</version>
 </dependency>
-
-        <dependency>
-  <groupId>com.oracle</groupId>
-  <artifactId>ojdbc11</artifactId>
-  <version>19.8.0.0</version>
-</dependency>
-
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
