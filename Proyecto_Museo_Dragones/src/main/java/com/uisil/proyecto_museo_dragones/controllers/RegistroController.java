@@ -4,12 +4,16 @@
  */
 package com.uisil.proyecto_museo_dragones.controllers;
 
+import com.uisil.proyecto_museo_dragones.model.Usuario;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import javafx.animation.PauseTransition;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class RegistroController {
 
@@ -33,79 +37,94 @@ public class RegistroController {
 
     @FXML
     private RadioButton rbFemenino;
+    
+        private Usuario usuarioEditar = null;
 
     @FXML
-    private void onRegistrar() {
-        String nombre = txtNombre.getText().trim();
-        String apellidos = txtApellidos.getText().trim();
-        String edadStr = txtEdad.getText().trim();
-        String correo = txtCorreo.getText().trim();
-        String contrasena = txtContrasena.getText();
-        String genero = rbMasculino.isSelected() ? "Masculino" :
-                        rbFemenino.isSelected() ? "Femenino" : "No seleccionado";
-        String tipoUsuario = "Visitante";
+private void onRegistrar() {
+    String nombre = txtNombre.getText().trim();
+    String apellidos = txtApellidos.getText().trim();
+    String edadStr = txtEdad.getText().trim();
+    String correo = txtCorreo.getText().trim();
+    String contrasena = txtContrasena.getText().trim();
+    String genero = rbMasculino.isSelected() ? "Masculino" :
+                    rbFemenino.isSelected() ? "Femenino" : "No seleccionado";
 
-        if (nombre.isEmpty() || apellidos.isEmpty() || edadStr.isEmpty() || correo.isEmpty() || contrasena.isEmpty()) {
-            mostrarAlerta("Error", "Todos los campos son obligatorios", Alert.AlertType.ERROR);
-            return;
-        }
+    if (nombre.isEmpty() || apellidos.isEmpty() || edadStr.isEmpty() || correo.isEmpty() || contrasena.isEmpty()) {
+        mostrarAlerta("Error", "Todos los campos son obligatorios", Alert.AlertType.ERROR);
+        return;
+    }
 
-        int edad;
-        try {
-            edad = Integer.parseInt(edadStr);
-        } catch (NumberFormatException e) {
-            mostrarAlerta("Error", "La edad debe ser un número", Alert.AlertType.ERROR);
-            return;
-        }
+    int edad;
+    try {
+        edad = Integer.parseInt(edadStr);
+    } catch (NumberFormatException e) {
+        mostrarAlerta("Error", "La edad debe ser un número", Alert.AlertType.ERROR);
+        return;
+    }
 
-        try (Connection con = getConexion()) {
+    try (Connection con = getConexion()) {
 
-            // Verificar si el correo ya existe
-            String sqlCorreo = "SELECT COUNT(*) FROM usuarios WHERE correo = ?";
-            PreparedStatement stmtCorreo = con.prepareStatement(sqlCorreo);
-            stmtCorreo.setString(1, correo);
-            ResultSet rsCorreo = stmtCorreo.executeQuery();
-            if (rsCorreo.next() && rsCorreo.getInt(1) > 0) {
-                mostrarAlerta("Error", "El correo ya está registrado", Alert.AlertType.ERROR);
-                return;
-            }
-
-            // Verificar si el usuario (nombre + apellidos) ya existe
-            String sqlUsuario = "SELECT COUNT(*) FROM usuarios WHERE nombre = ? AND apellidos = ?";
-            PreparedStatement stmtUsuario = con.prepareStatement(sqlUsuario);
-            stmtUsuario.setString(1, nombre);
-            stmtUsuario.setString(2, apellidos);
-            ResultSet rsUsuario = stmtUsuario.executeQuery();
-            if (rsUsuario.next() && rsUsuario.getInt(1) > 0) {
-                mostrarAlerta("Error", "Ya existe un usuario con ese nombre y apellidos", Alert.AlertType.ERROR);
-                return;
-            }
-
-            // Encriptar contraseña
-            String hashContrasena = encriptarSHA256(contrasena);
-
-            // Insertar en la base de datos
-            String sqlInsert = "INSERT INTO usuarios (nombre, apellidos, edad, correo, contrasena, genero, rol) VALUES (?, ?, ?, ?, ?, ?, 'VISITANTE')";
+        if (usuarioEditar == null) {
+            // --- AGREGAR USUARIO ---
+            String sqlInsert = "INSERT INTO usuarios (nombre, apellidos, edad, correo, contrasena, genero, rol) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement stmtInsert = con.prepareStatement(sqlInsert);
             stmtInsert.setString(1, nombre);
             stmtInsert.setString(2, apellidos);
             stmtInsert.setInt(3, edad);
             stmtInsert.setString(4, correo);
-            stmtInsert.setString(5, hashContrasena);
+            stmtInsert.setString(5, encriptarSHA256(contrasena));
             stmtInsert.setString(6, genero);
-           
+            stmtInsert.setString(7, rolPredeterminado);
+            stmtInsert.executeUpdate();
+            mostrarAlerta("Éxito", "Usuario agregado correctamente", Alert.AlertType.INFORMATION);
 
-            int filas = stmtInsert.executeUpdate();
-            if (filas > 0) {
-                mostrarAlerta("Éxito", "Usuario visitante registrado correctamente", Alert.AlertType.INFORMATION);
-                limpiarCampos();
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            mostrarAlerta("Error", "No se pudo registrar el usuario: " + e.getMessage(), Alert.AlertType.ERROR);
+        } else {
+            // --- EDITAR USUARIO ---
+            String sqlUpdate = "UPDATE usuarios SET nombre = ?, apellidos = ?, edad = ?, correo = ?, contrasena = ?,  genero = ?, rol = ? " +
+                               "WHERE id_usuario = ?";
+            PreparedStatement stmtUpdate = con.prepareStatement(sqlUpdate);
+            stmtUpdate.setString(1, nombre);
+            stmtUpdate.setString(2, apellidos);
+            stmtUpdate.setInt(3, edad);
+            stmtUpdate.setString(4, correo);
+            stmtUpdate.setString(5, encriptarSHA256(contrasena));
+            stmtUpdate.setString(6, genero);
+            stmtUpdate.setString(7, rolPredeterminado);
+            stmtUpdate.setInt(8, usuarioEditar.getId()); // <-- se usa el ID del usuario a editar
+            stmtUpdate.executeUpdate();
+            mostrarAlerta("Éxito", "Usuario editado correctamente", Alert.AlertType.INFORMATION);
         }
+
+        limpiarCampos();
+
+        // Cerrar ventana después de 3 segundos
+        PauseTransition pausa = new PauseTransition(Duration.seconds(3));
+        pausa.setOnFinished(e -> {
+            Stage stage = (Stage) txtNombre.getScene().getWindow();
+            stage.close();
+        });
+        pausa.play();
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        mostrarAlerta("Error", "No se pudo guardar el usuario: " + e.getMessage(), Alert.AlertType.ERROR);
     }
+}
+public void setUsuarioParaEditar(Usuario u) {
+    usuarioEditar = u;
+    txtNombre.setText(u.getNombre());
+    txtApellidos.setText(u.getApellido());
+    txtEdad.setText(String.valueOf(u.getEdad()));
+    txtCorreo.setText(u.getCorreo());
+    if (u.getGenero().equals("Masculino")) {
+        rbMasculino.setSelected(true);
+    } else if (u.getGenero().equals("Femenino")) {
+        rbFemenino.setSelected(true);
+    }
+}
+
+
 
     private Connection getConexion() throws SQLException {
         // Conexión a Oracle
@@ -146,5 +165,11 @@ public class RegistroController {
         rbMasculino.setSelected(false);
         rbFemenino.setSelected(false);
     }
+    private String rolPredeterminado = "VISITANTE";
+
+public void setRolPredeterminado(String rol) {
+    this.rolPredeterminado = rol;
+}
+
 }
 
