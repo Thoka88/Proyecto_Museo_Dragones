@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.uisil.proyecto_museo_dragones.controllers.Vista_DragonesController">
+
+    <top>
+        <Label fx:id="lblClaseSeleccionada"
+               style="-fx-font-size: 22px; -fx-font-weight: bold;"
+               BorderPane.alignment="CENTER"/>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true">
+            <GridPane fx:id="gridDragones" hgap="20" vgap="20"
+                      alignment="CENTER" padding="20"/>
+        </ScrollPane>
+    </center>
+</BorderPane>
+

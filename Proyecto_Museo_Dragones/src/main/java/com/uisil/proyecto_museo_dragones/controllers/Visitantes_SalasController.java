@@ -33,7 +33,7 @@ private Label lblDesc3;
 @FXML
 public void initialize() {
     // Asignar imágenes
-    imgClase1.setImage(new Image(getClass().getResourceAsStream("/imagenes/clase1.png")));
+    imgClase1.setImage(new Image(getClass().getResourceAsStream("")));
     imgClase2.setImage(new Image(getClass().getResourceAsStream("/imagenes/clase2.png")));
     imgClase3.setImage(new Image(getClass().getResourceAsStream("/imagenes/clase3.png")));
 
