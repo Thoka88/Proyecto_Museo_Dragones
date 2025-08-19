@@ -47,7 +47,7 @@ public class LoginController {
             if (usuarioLogueado.getRol().equalsIgnoreCase("ADMIN")) {
                 vista = "/com/uisil/proyecto_museo_dragones/views/Vista_Admin.fxml";
             } else {
-                vista = "/com/uisil/proyecto_museo_dragones/views/Visitantes_Salas.fxml";
+                vista = "/com/uisil/proyecto_museo_dragones/views/Vista_Clases_Dragones.fxml";
             }
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource(vista));
